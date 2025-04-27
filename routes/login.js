@@ -11,11 +11,13 @@ router.post('/', async function(req, res) {
         email: req.body.email
       }
     });
+    var resposta = "Usuario NÃO encontrado";
     if(user){
       console.log(user.id)
       id = user.id
-      res.send(user)
-    } else {res.send('Usuario NÃO encontrado')}
+      resposta = user;
+    } 
+    res.send(resposta);
   }
   catch (error) {
   console.error('Erro ao buscar usuário:', error);

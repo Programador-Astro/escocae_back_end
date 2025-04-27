@@ -57,7 +57,7 @@ app.use('/users', usersRouter);
 sequelize.authenticate()
   .then(() => {
     console.log('Conectado ao MySQL com sucesso! (app.js)');
-    return sequelize.sync({ force: false }); // Sincroniza tabelas
+    return sequelize.sync({ force: true }); // Sincroniza tabelas
   })
   .then(() => {
     console.log('Models sincronizados! (app.js)');

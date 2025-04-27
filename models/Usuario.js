@@ -3,10 +3,10 @@ const sequelize = require('../src/db/sequelize'); // importa a conexão
 
 const Usuario = sequelize.define('Usuario', {
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4, 
     allowNull: false,
     primaryKey: true,
-    autoIncrement: true,
   },
   nome: {
     type: DataTypes.STRING,
@@ -20,8 +20,12 @@ const Usuario = sequelize.define('Usuario', {
   senha: {
     type: DataTypes.STRING,
     allowNull: false,
-  
-  }
+  },
+  email_confirmado: {
+    type: DataTypes.DATE(6),
+    allowNull: true,
+    
+  },
 },{timestamps: false});
 
 module.exports = Usuario;
