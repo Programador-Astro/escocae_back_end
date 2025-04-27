@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', async function(req, res, next) {
+router.get('/1', async function(req, res, next) {
   
 
   const sequelize = require('../src/db/server.js').default;
