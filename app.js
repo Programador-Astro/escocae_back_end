@@ -26,6 +26,7 @@ const corsOptions = {
 
 // Importa os models (exemplo com Usuario)
 var Usuario = require('./models/Usuario'); // adapte conforme seus models
+var EnvioDeEmail = require('./models/EnvioDeEmail'); // adapte conforme seus models
 
 var loginRouter = require('./routes/login')
 var indexRouter = require('./routes/index');
