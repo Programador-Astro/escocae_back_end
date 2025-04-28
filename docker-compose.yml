@@ -2,21 +2,27 @@ services:
   db:
     image: mysql:9.3.0
     restart: always
-    environment:
-      MYSQL_DATABASE: 'db'
-      
-      MYSQL_USER: 'user'
-      
-      MYSQL_PASSWORD: 'password'  
-     
-      MYSQL_ROOT_PASSWORD: 'password'
-
     ports:
       - '3307:3306'
     expose:
       - '3306'
     volumes:
       - my-db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+
+    
+  service1:
+    build:
+        context: .
+        dockerfile: Dockerfile.backend
+    ports:
+        - "8080:8080"
+    depends_on:
+        - db
 # Names our volume
 volumes:
   my-db:

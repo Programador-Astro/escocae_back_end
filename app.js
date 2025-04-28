@@ -65,6 +65,19 @@ sequelize.authenticate()
   })
   .catch((err) => {
     console.error('Erro ao conectar/sincronizar com o banco:', err);
+    setTimeout(() => {
+      sequelize.authenticate()
+        .then(() => {
+          console.log('Conectado ao MySQL com sucesso! (app.js)');
+          return sequelize.sync({ force: true }); // Sincroniza tabelas
+        })
+        .then(() => {
+          console.log('Models sincronizados! (app.js)');
+        })
+        .catch((err) => {
+          console.error('Erro ao reconectar/sincronizar com o banco:', err);
+        });
+    }, 5000);
   });
 
 // catch 404 and forward to error handler
