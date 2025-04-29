@@ -37,12 +37,13 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
+app.set('port', 3000);
 
 app.use(logger('dev'));
 
 //Determinando a origem
 app.use(cors(corsOptions))
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -51,6 +52,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Rotas
 app.use('/', loginRouter)
+
 app.use('/1', indexRouter);
 app.use('/users', usersRouter);
 
@@ -73,6 +75,7 @@ sequelize.authenticate()
         })
         .then(() => {
           console.log('Models sincronizados! (app.js)');
+
         })
         .catch((err) => {
           console.error('Erro ao reconectar/sincronizar com o banco:', err);
@@ -84,6 +87,7 @@ sequelize.authenticate()
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
 
 // error handler
 app.use(function(err, req, res, next) {

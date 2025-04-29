@@ -21,9 +21,11 @@ router.post('/', async function(req, res) {
   }
   catch (error) {
   console.error('Erro ao buscar usuário:', error);
-  res.status(500).send('Erro ao buscar usuário no banco de dados.');
+  res.status(404).send('Erro a1o buscar usuário no banco de dados.');
 }
 });
+
+
 
 module.exports = router;
 /*

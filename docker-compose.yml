@@ -1,28 +1,39 @@
 services: 
   db:
     image: mysql:9.3.0
-    restart: always
     ports:
       - '3307:3306'
     expose:
       - '3306'
     volumes:
       - my-db:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: mydb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-
-    
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      retries: 10
+      interval: 3s
+      timeout: 30s
+    networks:
+      - nodejs-mysql-network
   service1:
     build:
-        context: .
-        dockerfile: Dockerfile.backend
+      context: .
+      dockerfile: Dockerfile.backend
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
-        - "8080:8080"
+      - "3000:3000"
+    networks:
+      - nodejs-mysql-network
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     depends_on:
-        - db
+      db:
+        condition: service_healthy
 # Names our volume
 volumes:
+
   my-db:
+networks:
+  nodejs-mysql-network:
+    name: nodejs-mysql-network
