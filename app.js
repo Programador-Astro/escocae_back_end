@@ -9,7 +9,7 @@ require('dotenv').config();
 var sequelize = require('./src/db/sequelize'); 
 
 // define de onde pode ser requisitada(Front-end)
-const allowedOrigins = ['http://localhost:5500', 'http://127.0.0.1:5500', 'https://www.thunderclient.com'];
+const allowedOrigins = [''];
 
 const corsOptions = {
   origin: function (origin, callback) {
