@@ -25,8 +25,6 @@ router.post('/', async function(req, res) {
 }
 });
 
-
-
 module.exports = router;
 /*
   var sequelize = require('../src/db/sequelize');

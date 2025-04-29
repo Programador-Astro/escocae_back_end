@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var cron = require('node-cron');
 const cors = require('cors');
 require('dotenv').config();
 
@@ -51,6 +52,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// cron
+
+cron.schedule('* * * * * *', () => {
+  console.log('Executando tarefa a cada segundo');
+});
 // Rotas
 app.use('/', loginRouter)
 
