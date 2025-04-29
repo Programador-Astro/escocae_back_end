@@ -9,7 +9,7 @@ require('dotenv').config();
 var sequelize = require('./src/db/sequelize'); 
 
 // define de onde pode ser requisitada(Front-end)
-const allowedOrigins = [''];
+const allowedOrigins = ['http://localhost:5500', 'http://127.0.0.1:5500', 'https://www.thunderclient.com'];
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -37,19 +37,20 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.set('port', 3000);
 
 app.use(logger('dev'));
 
 //Determinando a origem
 app.use(cors(corsOptions))
-
+app.listen(8080, () => {
+  console.log('Servidor rodando na porta 8080');
+}
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 // Rotas
 app.use('/', loginRouter)
 
@@ -87,7 +88,6 @@ sequelize.authenticate()
 app.use(function(req, res, next) {
   next(createError(404));
 });
-
 
 // error handler
 app.use(function(err, req, res, next) {

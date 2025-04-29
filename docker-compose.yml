@@ -18,11 +18,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.backend
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
     ports:
-      - "3000:3000"
+      - "8080:8080"
+    expose:
+      - "8080"
     networks:
       - nodejs-mysql-network
     environment:
