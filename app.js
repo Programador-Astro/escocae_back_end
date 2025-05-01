@@ -32,6 +32,7 @@ var EnvioDeEmail = require('./models/EnvioDeEmail'); // adapte conforme seus mod
 var loginRouter = require('./routes/login')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var createUserRouter = require('./routes/createUser');
 
 var app = express();
 
@@ -55,11 +56,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // cron
 
 cron.schedule('* * * * * *', () => {
-  console.log('Executando tarefa a cada segundo');
+  //console.log('Executando tarefa a cada segundo');
 });
 // Rotas
-app.use('/', loginRouter)
-
+app.use('/', loginRouter);
+app.use('/register', createUserRouter);
 app.use('/1', indexRouter);
 app.use('/users', usersRouter);
 

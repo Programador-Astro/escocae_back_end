@@ -12,6 +12,15 @@ const Usuario = sequelize.define('Usuario', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  sobrenome: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  empresa: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    comment: 'Nome da empresa vinculada ao usuário principal',
+  },
   email: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -24,7 +33,7 @@ const Usuario = sequelize.define('Usuario', {
   email_confirmado: {
     type: DataTypes.DATE(6),
     allowNull: true,
-    
+    comment: 'Caso email for confirmado, data de confirmação.',
   },
 },{timestamps: false});
 
