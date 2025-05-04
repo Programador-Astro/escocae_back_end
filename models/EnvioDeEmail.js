@@ -8,7 +8,7 @@ const EnvioDeEmail = sequelize.define('EnvioDeEmail', {
     allowNull: true,
     primaryKey: true,
   },
-  Usuario: {
+  usuario: {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
@@ -17,11 +17,11 @@ const EnvioDeEmail = sequelize.define('EnvioDeEmail', {
     },
 
   },
-  Email:{
+  email:{
     type: DataTypes.STRING,
     allowNull: false,
   },
-  Enviado: {
+  enviado: {
     type: DataTypes.DATE(6),
     allowNull: true,
         },

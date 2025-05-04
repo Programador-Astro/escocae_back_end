@@ -1,10 +1,12 @@
 
-var express = require('express');
-var router = express.Router();
-var bcrypt = require('bcrypt');
-var Usuario = require('../models/Usuario'); 
+let express = require('express');
+let router = express.Router();
+let bcrypt = require('bcrypt');
+let sequelize = require('../src/db/sequelize')
+let Usuario = require('../models/Usuario'); 
+let EnvioDeEmail = require('../models/EnvioDeEmail'); 
 
-var ValidationCreateUser = require('./src/ValidationsCreateUser.js');
+let ValidationCreateUser = require('./src/ValidationsCreateUser.js');
 
 router.put('/', async (req, res)=>{
     const { nome,sobrenome, email, empresa, senha, confirmarSenha } = req.body; 
@@ -33,12 +35,44 @@ router.put('/', async (req, res)=>{
                 return res.status(400).send('Email já cadastrado. Tente outro!');
             }
             //(fim-email)
-            
-            newUser = await Usuario.create({nome, sobrenome, email, empresa, senha: senhaHash})
+
+            const t = await sequelize.transaction();
+            try {
+                const newUser = await Usuario.create({
+                    "nome":nome,
+                    "sobrenome":sobrenome, 
+                    "email":email,
+                    "empresa": empresa,
+                    "senha": senhaHash
+                },
+                {
+                    transaction: t
+                })
+                    if(newUser instanceof Usuario){
+                        
+                        let id = newUser.id
+                        let emailUser = newUser.email
+                        console.log(id);
+                        const emailConfirmation = await EnvioDeEmail.create({
+                            "usuario":id, 
+                            "email":emailUser
+                        },{
+                            transaction: t
+                        })
+                    } else {
+                        throw new Error("Usuario nao criado.")
+                    }
+
+            await t.commit();
             res.status(200).send("Usuario Criado com sucesso!");
+            }catch(error){
+                await t.rollback()
+                res.status(400).send("Erro ao criar usuario, Transaction error  ! "+error)
+            }
             
 
-        } else{res.status(400).send("As senhas não são iguais!");}
+        } else{
+            res.status(400).send("As senhas não são iguais!");}
         //console.log(validarSenha)
         //res.status(200).send("done");
     } catch(error){
