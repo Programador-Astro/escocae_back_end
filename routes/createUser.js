@@ -9,7 +9,7 @@ var ValidationCreateUser = require('./src/ValidationsCreateUser.js');
 router.put('/', async (req, res)=>{
     const { nome,sobrenome, email, empresa, senha, confirmarSenha } = req.body; 
 
-    console.log("dados fora do Try (crateUser.js)", nome, email, empresa, senha, confirmarSenha)
+    console.log("dados fora do Try (cr`ateUser.js)", nome, email, empresa, senha, confirmarSenha)
     try{
         new ValidationCreateUser(nome,sobrenome, email, empresa, senha, confirmarSenha);
         

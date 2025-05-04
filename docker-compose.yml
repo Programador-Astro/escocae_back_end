@@ -1,8 +1,13 @@
 services: 
   db:
-    image: mysql:9.3.0
+    image: mysql:8.0
     ports:
       - '3307:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
     expose:
       - '3306'
     volumes:

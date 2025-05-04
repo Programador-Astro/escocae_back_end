@@ -52,6 +52,9 @@ class ValidationsCreateUser {
     }
     validarSenha(){
         let checkPassword = true;
+        if(!this.senha){
+            throw new Error("Password inválido.");   
+        }
         if(!this.senha.length > 8){
             checkPassword = false;
         }
@@ -64,6 +67,9 @@ class ValidationsCreateUser {
     }
     validarConfirmarSenha(){
         let checkPassword = true;
+        if(!this.confirmarSenha){
+            throw new Error("Password inválido.");   
+        }
         if(!this.confirmarSenha.length > 8){
             checkPassword = false;
         }
